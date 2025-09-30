@@ -13,29 +13,29 @@ backend.add(import('@sweetoburrito/backstage-plugin-ai-assistant-backend'));
 
 // Uncomment if you wan to use ollama
 
-// backend.add(
-//   import(
-//     '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-embeddings-provider-ollama'
-//   ),
-// );
-
-// backend.add(
-//   import(
-//     '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-model-provider-ollama'
-//   ),
-// );
-
 backend.add(
   import(
-    '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-embeddings-provider-azure-open-ai'
+    '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-embeddings-provider-ollama'
   ),
 );
 
 backend.add(
   import(
-    '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-model-provider-azure-ai'
+    '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-model-provider-ollama'
   ),
 );
+
+// backend.add(
+//   import(
+//     '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-embeddings-provider-azure-open-ai'
+//   ),
+// );
+
+// backend.add(
+//   import(
+//     '@sweetoburrito/backstage-plugin-ai-assistant-backend-module-model-provider-azure-ai'
+//   ),
+// );
 
 backend.add(
   import(

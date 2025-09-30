@@ -10,6 +10,8 @@ import {
   Ingestor,
   Model,
   modelProviderExtensionPoint,
+  Tool,
+  toolExtensionPoint,
 } from '@sweetoburrito/backstage-plugin-ai-assistant-node';
 import { createDataIngestionPipeline } from './services/ingestor';
 import { createChatService } from './services/chat';
@@ -28,6 +30,7 @@ export const aiAssistantPlugin = createBackendPlugin({
   register(env) {
     const ingestors: Ingestor[] = [];
     const models: Model[] = [];
+    const tools: Tool[] = [];
 
     let embeddingsProvider: EmbeddingsProvider;
 
@@ -56,6 +59,16 @@ export const aiAssistantPlugin = createBackendPlugin({
           throw new Error(`Model with id ${model.id} is already registered.`);
         }
         models.push(model);
+      },
+    });
+
+    env.registerExtensionPoint(toolExtensionPoint, {
+      register: tool => {
+        const existingTool = tools.find(t => t.name === tool.name);
+        if (existingTool) {
+          throw new Error(`Tool with name ${tool.name} is already registered.`);
+        }
+        tools.push(tool);
       },
     });
 
@@ -96,6 +109,7 @@ export const aiAssistantPlugin = createBackendPlugin({
         const chat = await createChatService({
           ...options,
           models,
+          tools,
           vectorStore,
           promptBuilder,
         });

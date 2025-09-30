@@ -16,9 +16,13 @@ import {
 } from '@sweetoburrito/backstage-plugin-ai-assistant-common';
 import { SignalsService } from '@backstage/plugin-signals-node';
 import { DEFAULT_SUMMARY_PROMPT } from '../constants/prompts';
+import { Tool } from '@sweetoburrito/backstage-plugin-ai-assistant-node';
+// import { DynamicStructuredTool } from '@langchain/core/tools';
+// import {} from 'langchain/agents';
 
 export type ChatServiceOptions = {
   models: Model[];
+  tools: Tool[];
   logger: LoggerService;
   vectorStore: VectorStore;
   config: RootConfigService;
@@ -64,6 +68,7 @@ export type ChatService = {
 
 export const createChatService = async ({
   models,
+  // tools,
   logger,
   vectorStore,
   promptBuilder,
@@ -74,6 +79,8 @@ export const createChatService = async ({
   logger.info(`Available models: ${models.map(m => m.id).join(', ')}`);
 
   const chatStore = await ChatStore.fromConfig({ database });
+
+  // const agentTools = tools.map(tool => new DynamicStructuredTool(tool));
 
   const getChatModelById = (id: string) => {
     return models.find(model => model.id === id)?.chatModel;
